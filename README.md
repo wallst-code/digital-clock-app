@@ -1,6 +1,6 @@
 # digital-clock-app
 
-<a href="https://wallst-code.github.io/website-test.io/">Digital Clock App</a>
+<a href="https://wallst-code.github.io/digital-clock-app/">Digital Clock App</a>
 
 Summary
 A simple digital clock app that was built using JavaScript, HTML and CSS.
