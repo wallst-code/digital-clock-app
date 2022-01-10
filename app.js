@@ -5,28 +5,27 @@ window.onload = () => {
   showDates();
 };
 
+const addLeadingZero = (num) => (num < 10 ? `0${num}` : `${num}`);
+
 function showTime() {
   const date = new Date();
   const hour = date.getHours();
-  const minute = date.getMinutes();
-  const second = date.getSeconds();
+  const minute = addLeadingZero(date.getMinutes());
+  const second = addLeadingZero(date.getSeconds());
   let civilianHour = hour > 12 ? hour - 12 : hour;
 
-  let adjustedMinute = minute < 10 ? `0${minute}` : `${minute}`;
-  let adjustedSecond = second < 10 ? `0${second}` : `${second}`;
   let dayOrNight = hour < 12 ? "AM" : "PM";
 
-  let myTime = `${civilianHour}:${adjustedMinute}:${adjustedSecond} ${dayOrNight}`;
-
-  document.getElementById("clock").textContent = myTime;
+  const myTime = document.getElementById("clock");
+  myTime.textContent = `${civilianHour}:${minute}:${second} ${dayOrNight}`;
 }
 
 function showDates() {
-  const date = new Date();
-  const day = date.getDay();
-  const dayOfMonth = date.getDate();
-  const month = date.getMonth();
-  const year = date.getFullYear();
+  const dateObj = new Date();
+  const day = dateObj.getDay();
+  const date = displayDateSuffix(dateObj.getDate());
+  const month = dateObj.getMonth();
+  const year = dateObj.getFullYear();
 
   const daysOfWeek = {
     0: "Sunday",
@@ -57,19 +56,13 @@ function showDates() {
 
   const stringMonth = monthsOfYear[month];
 
-  let daySuffix = "";
+  const myDate = document.getElementById("date-elements");
+  myDate.textContent = `${stringDay}, ${stringMonth} ${date} ${year}`;
+}
 
-  if (dayOfMonth === 1 || dayOfMonth === 21 || dayOfMonth === 31) {
-    daySuffix = "st";
-  } else if (dayOfMonth === 2 || dayOfMonth === 22) {
-    daySuffix = "nd";
-  } else if (dayOfMonth === 3 || dayOfMonth === 23) {
-    daySuffix = "rd";
-  } else {
-    daySuffix = "th";
-  }
-
-  let myDate = `${stringDay}, ${stringMonth} ${dayOfMonth}${daySuffix} ${year}`;
-
-  document.getElementById("date-elements").textContent = myDate;
+function displayDateSuffix(date) {
+  if (date % 10 === 1) return `${date}st`;
+  if (date % 10 === 2) return `${date}nd`;
+  if (date % 10 === 3) return `${date}rd`;
+  return `${date}th`;
 }
